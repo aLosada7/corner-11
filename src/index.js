@@ -1,21 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import store from './app/store';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+import { CssBaseline } from '@material-ui/core';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
+import App from './components/app/App';
+import rootReducer from './store/reducers';
+import { watchAuth } from './store/sagas';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(rootReducer, composeEnhancers(
+    applyMiddleware(thunk, sagaMiddleware)
+));
+
+// run sagas
+sagaMiddleware.run(watchAuth);
+
+const app = (
+    <Provider store={store}>  
+        <CssBaseline />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+)
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(app, document.getElementById('root'));
