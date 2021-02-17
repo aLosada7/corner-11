@@ -1,9 +1,8 @@
 import axios from '../../axios-manager';
 import { put } from 'redux-saga/effects';
+import { LOGIN_FAILED, LOGIN_SUCCESS } from '../auth/types';
 
-import { LOGIN_SUCCESS, LOGIN_FAILED, SET_USER_SUCCESS, SET_USER_FAILED } from '../actions/actionTypes';
-
-export function* loginSaga(action) {
+export function* loginSaga(action: any) {
     try {
         let url = '/api/v1/auth/login';
 
@@ -19,13 +18,13 @@ export function* loginSaga(action) {
         yield put({ type: LOGIN_FAILED, error: error.response  ? error.response.data  : "ERROR.UNEXPECTED-ERROR" });
     }
 };
-
-export function* setUserSaga(action) {
+/*
+export function* setUserSaga(action: any) {
     try {
 
         const expirationDate = new Date(new Date().getTime() + (86400 * 60));
         yield localStorage.setItem('token', action.token);
-        yield localStorage.setItem('expirationDate', expirationDate);
+        yield localStorage.setItem('expirationDate', expirationDate.toString());
 
         let url = '/api/v1/auth/me';
         
@@ -41,3 +40,4 @@ export function* setUserSaga(action) {
         yield put({ type: SET_USER_FAILED, error: error.response  ? error.response.data  : "ERROR.UNEXPECTED-ERROR" });
     }
 };
+*/

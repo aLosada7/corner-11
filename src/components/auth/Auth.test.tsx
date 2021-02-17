@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Auth } from '../auth/Auth';
+import { Auth } from './Auth';
 import { shallowWithTheme, createMatchMedia } from '../../../test/testUtils';
 
 let wrapper;

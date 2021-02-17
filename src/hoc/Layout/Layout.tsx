@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import ReactAux from '../ReactAux/ReactAux';
 
-const Layout = (props) => {
+const Layout: React.FC = (props) => {
 
     return(
         <ReactAux>
@@ -15,7 +15,7 @@ const Layout = (props) => {
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = () => {
     return {
         
     }

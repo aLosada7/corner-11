@@ -4,16 +4,25 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField'; 
-import { bindActionCreators } from '@reduxjs/toolkit';
 //import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import * as authActions from '../../store/actions/auth';
+import { RootState } from '../../store';
+import { LoginInfo } from '../../store/auth/types';
+import { Theme } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) =>({
+interface DispatchProps {
+    login: (user: LoginInfo) => void
+}
 
+type Props = DispatchProps
+
+const useStyles = makeStyles<Theme>((theme) =>({
+    root: {
+        maxWidth: '100%'
+    }
 }));
 
-export const Auth = props => {
+export const Auth = (props: Props) => {
     const classes = useStyles();
     //const theme = useTheme();
     const matchesMD = false; //useMediaQuery(theme.breakpoints.down("md"));
@@ -22,7 +31,7 @@ export const Auth = props => {
 
     const [formState, setFormState] = useState({ 'email': '', 'password': ''});
 
-    const updateInputValue = (type, value) => {
+    const updateInputValue = (type: any, value: any) => {
         setFormState({ ...formState, [type]: value })
     }
 
@@ -73,18 +82,16 @@ export const Auth = props => {
     )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: RootState) => {
     return {
-        user: state.auth.user
+        
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators(
-        authActions,
-        dispatch
-    );
+const mapDispatchToProps = {
+    login: (user: LoginInfo) => ({ type: 'LOGIN', payload: user })
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+
+export default connect<any, DispatchProps>(null, mapDispatchToProps)(Auth);
