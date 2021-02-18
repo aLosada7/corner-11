@@ -4,18 +4,21 @@ import { LOGIN_FAILED, LOGIN_SUCCESS } from '../auth/types';
 
 export function* loginSaga(action: any) {
     try {
-        let url = '/api/v1/auth/login';
+        let url = yield '/api/v1/auth/login';
 
-        let response = yield axios.post(url, action.formLogin);
-        response = response.data;
+        let response = yield axios.post(url, action.payload);
 
-        if (response.success) {
-            yield put({ type: LOGIN_SUCCESS, token: response.token});
+        if (response.data.success) {
+            const expirationDate = yield new Date(new Date().getTime() + (86400 * 60));
+            yield localStorage.setItem('token', response.data.token);
+            yield localStorage.setItem('expirationDate', expirationDate);
+            yield put({ type: LOGIN_SUCCESS, token: response.data.token });
         } else {
-            yield put({ type: LOGIN_FAILED, error: response.error ? response.error : "ERROR.UNEXPECTED-ERROR" });
+            yield put({ type: LOGIN_FAILED, errorMessage: response.data  ? response.data.error : "ERROR.UNEXPECTED-ERROR" });
         }
     } catch (error) {
-        yield put({ type: LOGIN_FAILED, error: error.response  ? error.response.data  : "ERROR.UNEXPECTED-ERROR" });
+        error = error.response;
+        yield put({ type: LOGIN_FAILED, errorMessage: error.data ? error.data.error : "ERROR.UNEXPECTED-ERROR" });
     }
 };
 /*

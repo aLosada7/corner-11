@@ -9,12 +9,12 @@ import TextField from '@material-ui/core/TextField';
 import { RootState } from '../../store';
 import { LoginInfo } from '../../store/auth/types';
 import { Theme } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
 
-interface DispatchProps {
-    login: (user: LoginInfo) => void
+interface Props {
+    error: string
+    onSubmit: (user: LoginInfo) => void
 }
-
-type Props = DispatchProps
 
 const useStyles = makeStyles<Theme>((theme) =>({
     root: {
@@ -27,23 +27,27 @@ export const Auth = (props: Props) => {
     //const theme = useTheme();
     const matchesMD = false; //useMediaQuery(theme.breakpoints.down("md"));
 
-    const { login } = props;
-
     const [formState, setFormState] = useState({ 'email': '', 'password': ''});
+
+    let error = null;
+    if (props.error) {
+        error = props.error
+    }
 
     const updateInputValue = (type: any, value: any) => {
         setFormState({ ...formState, [type]: value })
     }
 
-    const onTopSignIn = () => {
-        login({ email: formState.email, password: formState.password });
+    const login = () => {
+        console.log("login fired")
+        props.onSubmit({ email: formState.email, password: formState.password });
     }
 
     let topLogin = null;
 
     if (!matchesMD) {
         topLogin = (
-            <Grid item container>
+            <Grid direction="column" item container>
                 <TextField 
                     variant="outlined"
                     placeholder="Enter email"
@@ -58,8 +62,8 @@ export const Auth = (props: Props) => {
                     value={formState.password}
                     onChange={(event) => updateInputValue('password', event.target.value)}
                 />
-                <Button id="login" variant="outlined" type="submit" onClick={onTopSignIn}>
-                    <span>Sign In</span>
+                <Button data-testid="login-button" variant="outlined" onClick={login}>
+                    Sign In
                 </Button>
             </Grid>
         )
@@ -67,16 +71,9 @@ export const Auth = (props: Props) => {
 
     return (
         <div className={classes.root}>
+            {props.error}
             <Grid container direction="column">
                 { topLogin }
-                <Grid item container>
-                    <Button variant="outlined" type="button" className={classes.loginButton}>
-                        <span>Sign Up</span>
-                    </Button>
-                    <Button variant="outlined" type="button" className={classes.loginButton}>
-                        <span>Sign In</span>
-                    </Button>
-                </Grid>
             </Grid>
         </div>
     )
@@ -84,14 +81,14 @@ export const Auth = (props: Props) => {
 
 const mapStateToProps = (state: RootState) => {
     return {
-        
+        error: state.auth.error
     }
 }
 
 const mapDispatchToProps = {
-    login: (user: LoginInfo) => ({ type: 'LOGIN', payload: user })
+    onSubmit: (user: LoginInfo) => ({ type: 'LOGIN', payload: user })
 }
 
 
 
-export default connect<any, DispatchProps>(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

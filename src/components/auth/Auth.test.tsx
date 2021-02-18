@@ -1,29 +1,19 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import React from 'react'
 
-import { Auth } from './Auth';
-import { shallowWithTheme, createMatchMedia } from '../../../test/testUtils';
+import { render, fireEvent, waitFor, screen } from '../../testUtils'
 
-let wrapper;
+import Auth from './Auth'
+
 const mockProps = {
-    user: null,
-    login: jest.fn()
+    onSubmit: jest.fn()
 };
 
-describe("redux props", () => {
-    beforeAll(() => {
-        //window.matchMedia = createMatchMedia(window.innerWidth);
-        wrapper = shallow(<Auth {...mockProps} />);
-    });
+describe("<Auth />", () => {
 
-    test("user does not exists", () => {
-        let user = null;
-        const userProp = mockProps.user;
-        expect (userProp).toBe(user);
-    })
+    test("trigers onSubmit", () => {
+        const { getByTestId } = render(<Auth {...mockProps}/>, { initialState: {} })
+        const button = getByTestId('login-button')
 
-    test("trigers onSignUp", () => {
-        wrapper.find("#login").simulate("click");
-        expect(mockProps.login).toHaveBeenCalled();
+        expect(getByTestId('login-button')).toBeTruthy();
     })
 })

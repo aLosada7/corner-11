@@ -1,8 +1,6 @@
-import { AuthActionTypes, AuthState, LOGIN } from './types';
+import { AuthActionTypes, AuthState, LOGIN, LOGIN_SUCCESS, LOGIN_FAILED } from './types';
 
 const initialState: AuthState = {
-    user: null,
-    error: null,
     loading: false
 }
 
@@ -15,6 +13,18 @@ export function authReducer(
             return {
                 ...state,
                 loading: true
+            };
+        case LOGIN_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                token: action.token
+            };
+        case LOGIN_FAILED:
+            return {
+                ...state,
+                loading: false,
+                error: action.errorMessage
             };
         default:
             return state;

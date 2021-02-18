@@ -6,7 +6,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import thunk from 'redux-thunk';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     auth: authReducer
 })
 export type RootState = ReturnType<typeof rootReducer>
