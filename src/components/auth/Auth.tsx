@@ -12,7 +12,8 @@ import { Theme } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 
 interface Props {
-    error: string
+    token?: string
+    error?: string
     onSubmit: (user: LoginInfo) => void
 }
 
@@ -28,6 +29,10 @@ export const Auth = (props: Props) => {
     const matchesMD = false; //useMediaQuery(theme.breakpoints.down("md"));
 
     const [formState, setFormState] = useState({ 'email': '', 'password': ''});
+
+    if (props.token) {
+        return <Redirect to='home' />;
+    }
 
     let error = null;
     if (props.error) {
@@ -81,6 +86,7 @@ export const Auth = (props: Props) => {
 
 const mapStateToProps = (state: RootState) => {
     return {
+        token: state.auth.token,
         error: state.auth.error
     }
 }
@@ -88,7 +94,5 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = {
     onSubmit: (user: LoginInfo) => ({ type: 'LOGIN', payload: user })
 }
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

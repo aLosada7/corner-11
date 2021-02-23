@@ -6,10 +6,11 @@ import { CssBaseline } from '@material-ui/core';
 
 import App  from './components/app/App';
 import { store } from './store';
-import { watchAuth } from './store/modules';
+import { authSaga, teamSaga } from './store/modules';
 
 const theStore = store();
-theStore.runSaga(watchAuth);
+theStore.runSaga(authSaga);
+theStore.runSaga(teamSaga);
 
 const app = (
     <Provider store={theStore}>  

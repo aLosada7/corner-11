@@ -1,5 +1,6 @@
 import React from 'react'
 import { render as rtlRender } from '@testing-library/react'
+import { BrowserRouter, Route } from 'react-router-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 // Import your own reducer
@@ -14,7 +15,13 @@ function render(
   } = {}
 ) {
   function Wrapper({ children }) {
-    return <Provider store={store}>{children}</Provider>
+    return <Provider store={store}>
+        <BrowserRouter>
+            <Route path="/auth">Auth page</Route>
+            <Route path="/home">Home page</Route>
+            {children}
+        </BrowserRouter>
+        </Provider>
   }
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions })
 }

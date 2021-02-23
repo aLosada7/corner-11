@@ -7,7 +7,7 @@ const initialState: AuthState = {
 
 let updatedState = {};
 
-describe("auth reducers", () => {
+describe("auth reducer", () => {
     it("handle LOGIN action", () => {
         updatedState = { ...initialState, loading: true }
 
@@ -25,15 +25,17 @@ describe("auth reducers", () => {
     it("handle LOGIN_SUCCESS action", () => {
         const token: string = "randomtoken"
         const user: IUserModel = {
+            _id: "5d7a514b5d2c12c7449be042",
             email: "aldc30sc@gmail.com",
-            name: "Alvaro"
+            name: "Alvaro",
+            teamId: "5d7a514b5d2c12c7449be043"
         }
 
-        updatedState = { ...initialState, loading: false, token }
+        updatedState = { ...initialState, loading: false, token, user }
 
         expect(authReducer(
             { ...initialState, loading: true },
-            { type: "LOGIN_SUCCESS", token}
+            { type: "LOGIN_SUCCESS", payload: { token, user }}
         )).toEqual(updatedState)
     });
 
@@ -45,6 +47,33 @@ describe("auth reducers", () => {
         expect(authReducer(
             { ...initialState, loading: true },
             { type: "LOGIN_FAILED", errorMessage }
+        )).toEqual(updatedState)
+    });
+
+    it("handle LOGOUT action", () => {
+        updatedState = { ...initialState, loading: true }
+        expect(authReducer(
+            { ...initialState },
+            { type: "LOGOUT" }
+        )).toEqual(updatedState)
+    });
+
+    it("handle LOGOUT_SUCCESS action", () => {
+        updatedState = { ...initialState }
+        expect(authReducer(
+            { ...initialState, loading: true },
+            { type: "LOGOUT_SUCCESS" }
+        )).toEqual(updatedState)
+    });
+
+    it("handle LOGOUT_FAILED action", () => {
+        const errorMessage: string = "ERROR.UNEXPECTED-ERROR"
+
+        updatedState = { ...initialState, error: errorMessage}
+
+        expect(authReducer(
+            { ...initialState, loading: true },
+            { type: "LOGOUT_FAILED", errorMessage }
         )).toEqual(updatedState)
     });
 })

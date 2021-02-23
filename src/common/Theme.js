@@ -3,6 +3,11 @@ import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 const arcPrimary = 'rgb(29, 161, 242)'
 const arcPrimaryDark = 'rgb(26, 145, 218)'
 
+const white = '#FCFCFC';
+const black = '#1C1E20';
+const lighestBlack = '#202D34'; 
+const grey = '#485963';
+
 let theme = createMuiTheme({
     palette: {
         type: 'dark',

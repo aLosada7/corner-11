@@ -10,10 +10,8 @@ const mockProps = {
 
 describe("<Auth />", () => {
 
-    test("trigers onSubmit", () => {
-        const { getByTestId } = render(<Auth {...mockProps}/>, { initialState: {} })
-        const button = getByTestId('login-button')
-
-        expect(getByTestId('login-button')).toBeTruthy();
+    test("right authentication changes navigation to home component", () => {
+        const { container } = render(<Auth {...mockProps}/>, { initialState: { auth: { token: "example_token"} }  })
+        expect(container).toHaveTextContent(/Home page/);
     })
 })
