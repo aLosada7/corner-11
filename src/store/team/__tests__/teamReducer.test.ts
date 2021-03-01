@@ -1,5 +1,5 @@
-import { teamReducer } from './reducers';
-import { TeamState } from './types';
+import { teamReducer } from '../reducers';
+import { TeamState } from '../types';
 
 const initialState: TeamState = {
     players: []

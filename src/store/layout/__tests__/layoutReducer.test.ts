@@ -1,5 +1,5 @@
-import { layoutReducer } from './reducers';
-import { LayoutState } from './types';
+import { layoutReducer } from '../reducers';
+import { LayoutState } from '../types';
 
 const initialState: LayoutState = {
     loading: false

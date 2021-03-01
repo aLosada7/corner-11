@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import theme from '../../common/Theme'
 import './App.css'
 import Layout from '../../hoc/Layout/Layout'
-const Auth = lazy(() => import('../auth/Auth'))
-const Landing = lazy(() => import('../landing/Landing'))
-const Home = lazy(() => import('../home/Home'));
+const Auth = lazy(() => import('../Auth/Auth'))
+const Landing = lazy(() => import('../Landing/Landing'))
+const Home = lazy(() => import('../Home/Home'));
 
 const Loading: React.FC = () => { return(<div>"I'm loading."</div>) };
 

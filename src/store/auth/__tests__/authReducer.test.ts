@@ -1,5 +1,5 @@
-import { authReducer } from './reducers';
-import { AuthState, LoginInfo, IUserModel } from './types';
+import { authReducer } from '../reducers';
+import { AuthState, LoginInfo, IUserModel } from '../types';
 
 const initialState: AuthState = {
     loading: false

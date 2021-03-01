@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { render, fireEvent, waitFor, screen } from '../../testUtils'
+import { render, fireEvent, waitFor, screen } from '../../../testUtils'
 
-import Landing from './Landing'
+import Landing from '../Landing'
 
 const mockProps = {
     token: jest.fn(),

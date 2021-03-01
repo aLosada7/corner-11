@@ -3,8 +3,8 @@ import { delay } from 'redux-saga/effects'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
-import { authReducer } from '../auth/reducers'
-import { authSaga } from './index'
+import { authReducer } from '../../auth/reducers'
+import { authSaga } from '../index'
 
 describe("auth saga", () => {
     let sagaTester;

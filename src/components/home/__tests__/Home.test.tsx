@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { render, fireEvent, waitFor, screen } from '../../testUtils'
+import { render, fireEvent, waitFor, screen } from '../../../testUtils'
 
-import Home from './Home'
+import Home from '../Home'
 
 const mockProps = {
     onSubmit: jest.fn()

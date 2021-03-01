@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { render, fireEvent, waitFor, screen } from '../../testUtils'
+import { render, fireEvent, waitFor, screen } from '../../../testUtils'
 
-import Auth from './Auth'
+import Auth from '../Auth'
 
 const mockProps = {
     onSubmit: jest.fn()
